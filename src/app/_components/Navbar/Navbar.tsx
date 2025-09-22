@@ -4,19 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu } from "lucide-react";
-
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { NavigationMenu, NavigationMenuItem , NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle,} from "@/components/ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger, } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
 export function Navbar() {
@@ -30,13 +19,16 @@ export function Navbar() {
   ];
 
   const MenuauthItems: { path: string; content: string }[] = [
-    { path: "/login", content: "Login" },
+    { path: "/Login", content: "Login" },
     { path: "/register", content: "Register" },
   ];
 
   return (
     <nav className="shadow-2xl py-4 px-0 bg-white">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
+
+        {/* Desktop Menu */}
+        <NavigationMenu className="hidden md:flex">
         {/* Logo */}
         <Link href="/">
           <Image
@@ -46,9 +38,6 @@ export function Navbar() {
             height={100}
           />
         </Link>
-
-        {/* Desktop Menu */}
-        <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             {MenuItems.map((item) => (
               <NavigationMenuItem key={item.path}>

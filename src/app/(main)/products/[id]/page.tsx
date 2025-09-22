@@ -27,7 +27,7 @@ export default async function page({params}:{params:{id:string}}) {
       };
 
     const {id}= await params;
-    const res = await fetch(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${id}`);
     const data:productDetails = await res.json();
     const product:productDetailsitem = data.data;
     const {images} = product;

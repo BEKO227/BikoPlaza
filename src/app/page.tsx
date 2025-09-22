@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { HomeLoading } from "./_components/HomeLoading/HomeLoading";
 
 export default async function Home() {
-  const res = await fetch("https://ecommerce.routemisr.com/api/v1/products");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products`);
   const data:ProductData = await res.json();
   const productList:product[] = data.data;
   return (

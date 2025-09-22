@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Navbar } from './_components/Navbar/Navbar';
 import Footer from "./_components/Footer/Footer";
-
+import { Toaster } from "@/components/ui/sonner";
 
 const Encode_Sans_Font = Encode_Sans({
   subsets: ["latin"],
@@ -34,6 +34,7 @@ export default function RootLayout({
         <main className="p-5">
         {children}
         </main>
+        <Toaster/>
         <Footer/>
       </body>
     </html>

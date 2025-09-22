@@ -8,13 +8,12 @@ import * as z from 'zod';
 import { Input } from '@/components/ui/input';
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
-export default function Login() {
+export default function ResetPassword() {
   const Route =   useRouter();
-  const SchemaLogin = z.object({
+  const SchemaResetPassword = z.object({
     email: z.email().nonempty({ message: "Invalid email address." }),
-    password: z
+    newPassword: z
       .string()
       .min(6, { message: "Password must be at least 6 characters." })
       .regex(/^(?=.*[A-Za-z])(?=.*\d).{6,}$/, {
@@ -22,16 +21,16 @@ export default function Login() {
           "Password must contain at least one letter, one number, and can include special characters.",
       }),
      })
-  const loginForm = useForm<z.infer<typeof SchemaLogin>>({
+  const ResetPasswordForm = useForm<z.infer<typeof SchemaResetPassword>>({
     defaultValues: {
       email: '',
-      password: '',
+      newPassword: '',
     },
-    resolver: zodResolver(SchemaLogin),
+    resolver: zodResolver(SchemaResetPassword),
   })
-  async function handleLogin(values: z.infer<typeof SchemaLogin>) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signin`, {
-      method: 'POST',
+  async function handleResetPassword(values: z.infer<typeof SchemaResetPassword>) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/resetPassword`, {
+      method: 'PUT',
       body: JSON.stringify(values),
       headers: {
         'Content-Type': 'application/json'
@@ -39,22 +38,22 @@ export default function Login() {
     })
     const data = await res.json();
     console.log(data);
-    if(data.message === 'success'){
-      loginForm.reset();
-      toast.success('Welcome Back!',{position:"top-center"});
-      Route.push('/');
+    if(data.token){
+      ResetPasswordForm.reset();
+      toast.success('Reset Passowrd Done successfully!',{position:"top-center"});
+      Route.push('/Login');
     } else {
-      toast.error(data.message || 'login failed. Please try again.',{position:"top-center"});
+      toast.error(data.message || 'ResetPassword failed. Please try again.',{position:"top-center"});
     }
   }
   return (
     <>
     <div className='w-3/4 md:w-1/3 mx-auto m-5 p-6 border border-gray-300 rounded-lg shadow-2xl'>
     <h1 className='text-blue-950 flex font-extrabold justify-center'>Log<span className='text-orange-500'>In</span></h1>
-      <Form {...loginForm}>
-        <form onSubmit={loginForm.handleSubmit(handleLogin)}>
+      <Form {...ResetPasswordForm}>
+        <form onSubmit={ResetPasswordForm.handleSubmit(handleResetPassword)}>
         <FormField
-          control={loginForm.control}
+          control={ResetPasswordForm.control}
           name="email"
           render={({ field })  => (
             <FormItem>
@@ -67,11 +66,11 @@ export default function Login() {
           )}
         />
           <FormField
-          control={loginForm.control}
-          name="password"
+          control={ResetPasswordForm.control}
+          name="newPassword"
           render={({ field })  => (
             <FormItem>
-              <FormLabel className='text-blue-950 m-2'>Enter Your Password</FormLabel>
+              <FormLabel className='text-blue-950 m-2'>Enter Your New Password</FormLabel>
               <FormControl>
                 <Input type="password" {...field} placeholder='Password'  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent mb-2' />
               </FormControl>
@@ -79,15 +78,17 @@ export default function Login() {
             </FormItem>
           )}
         />
-          <Button className='w-full bg-orange-500 cursor-pointer'>Log in</Button>
-          <div className="flex justify-between mt-4 text-sm">
-            <Link href="/register" className="text-blue-900">
-              Don't have an account? <span className="text-orange-500">Register</span>
-            </Link>
-            <Link href="/ForgotPassword" className="text-blue-900">
-              Forgot Password?
-            </Link>
-          </div>
+        {
+            ResetPasswordForm.formState.isSubmitting ? (
+                <Button disabled className='w-full bg-orange-500 cursor-pointer text-white py-2 px-4 rounded-md hover:bg-orange-600'>
+                Reseting...
+                </Button>
+            ) : (
+                <Button type="submit" className='w-full bg-orange-500 cursor-pointer text-white py-2 px-4 rounded-md hover:bg-orange-600'>
+                Reset Password
+                </Button>
+            )
+        }
         </form>
       </Form>
     </div>
