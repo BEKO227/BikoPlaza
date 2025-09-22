@@ -82,7 +82,7 @@ export default function Login() {
           <Button className='w-full bg-orange-500 cursor-pointer'>Log in</Button>
           <div className="flex justify-between mt-4 text-sm">
             <Link href="/register" className="text-blue-900">
-              Don't have an account? <span className="text-orange-500">Register</span>
+            Don&apos;t have an account? <span className="text-orange-500">Register</span>
             </Link>
             <Link href="/ForgotPassword" className="text-blue-900">
               Forgot Password?
