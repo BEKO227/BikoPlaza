@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
-export default function brands() {
+export default function Brands() {
   const [brands, setbrands] = useState<Datum[]>([])
 
   async function getAllbrands() {
