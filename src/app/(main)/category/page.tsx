@@ -1,9 +1,62 @@
-import React from 'react'
+'use client'
+import Image from 'next/image'
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 
-export default function page() {
+export default function Category() {
+  const [categories, setCategories] = useState<any[]>([]) // store categories
+
+  async function getAllCategories() {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const data = await res.json()
+      console.log(data)
+      setCategories(data.data) // update state
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+    }
+  }
+
+  useEffect(() => {
+    getAllCategories()
+  }, [])
+
   return (
-    <div>
-      <h1>Category</h1>
+    <div className="container mx-auto px-4 py-10">
+      <h1 className="text-3xl font-bold mb-8 text-center text-orange-500">
+        Shop by Category
+      </h1>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {categories.length > 0 ? (
+          categories.map((cat) => (
+            <Link
+              key={cat._id}
+              href={`/categories/${cat.slug}`}
+              className="block bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition"
+            >
+              <div className="relative w-full h-40">
+                <Image
+                  src={cat.image}
+                  alt={cat.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-3 text-center">
+                <h2 className="font-semibold text-gray-700">{cat.name}</h2>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <p className="text-center col-span-full text-gray-500">Loading categories...</p>
+        )}
+      </div>
     </div>
   )
 }
