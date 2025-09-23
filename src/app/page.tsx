@@ -12,15 +12,14 @@ export default async function Home() {
     <>
       <h1 className="text-3xl font-bold mb-5 text-blue-950">Welcome to Biko <span className="text-orange-400">Plaza</span></h1>
       <MainSlider/>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pt-2 justify-items-center">
         <Suspense fallback={<HomeLoading/>}>
-        {
-          productList.map((product)=>(
-            <ProductCard key={product._id} product={product}/>
-          ))
-        }
+          {productList.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
         </Suspense>
       </div>
+
     </>
   );
 }
