@@ -1,10 +1,11 @@
 'use client'
+import { Datum } from '@/types/category'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 export default function Category() {
-  const [categories, setCategories] = useState<any[]>([]) // store categories
+  const [categories, setCategories] = useState<Datum[]>([])
 
   async function getAllCategories() {
     try {
@@ -16,7 +17,7 @@ export default function Category() {
       })
       const data = await res.json()
       console.log(data)
-      setCategories(data.data) // update state
+      setCategories(data.data)
     } catch (error) {
       console.error('Error fetching categories:', error)
     }
