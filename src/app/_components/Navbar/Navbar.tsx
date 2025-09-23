@@ -26,9 +26,6 @@ export function Navbar() {
   return (
     <nav className="shadow-2xl py-4 px-0 bg-white">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-
-        {/* Desktop Menu */}
-        <NavigationMenu className="hidden md:flex">
         {/* Logo */}
         <Link href="/">
           <Image
@@ -38,6 +35,9 @@ export function Navbar() {
             height={100}
           />
         </Link>
+
+        {/* Desktop Menu */}
+        <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             {MenuItems.map((item) => (
               <NavigationMenuItem key={item.path}>
