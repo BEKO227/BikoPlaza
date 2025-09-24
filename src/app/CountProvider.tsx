@@ -16,7 +16,7 @@ export default function CountProvider({ children }: { children: React.ReactNode 
   const [count, setcount] = useState(0);
 
   async function getcart() {
-    let token: any = await getUserToken();
+    const token: any = await getUserToken();
     if (token) {
       const data: CartData = await getCartData();
       let sum = 0;

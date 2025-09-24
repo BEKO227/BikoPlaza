@@ -50,7 +50,7 @@ export default function Login() {
     console.log(x);
     if(x?.ok){
       toast.success(`Welcome Back! ${session?.user?.name}`,{position:"top-center"});
-          let token: any = await getUserToken();
+      const token: any = await getUserToken();
           if (token) {
             const data: CartData = await getCartData();
             let sum = 0;

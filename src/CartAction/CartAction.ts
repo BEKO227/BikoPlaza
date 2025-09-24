@@ -3,7 +3,7 @@ import { getUserToken } from "@/getUserToken";
 import { CartData } from "@/types/cartdata.type";
 
 export async function getCartData(){
-    let token : any = await getUserToken()
+    const token : any = await getUserToken()
     if (!token){
         throw new Error('token error')
     }
@@ -63,7 +63,7 @@ export async function ClearCart(){
 
 }
 export async function UpdateProductQuantity(id:string , count:number){
-    let token : any = await getUserToken()
+    const token : any = await getUserToken()
     if (!token){
         throw new Error('token error')
     }
