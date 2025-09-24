@@ -7,6 +7,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Navbar } from './_components/Navbar/Navbar';
 import Footer from "./_components/Footer/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import UserProvider from './UserProvider';
+import CountProvider from "./CountProvider";
 
 const Encode_Sans_Font = Encode_Sans({
   subsets: ["latin"],
@@ -30,12 +32,16 @@ export default function RootLayout({
       <body
         className={`${Encode_Sans_Font.className}`}
       >
-        <Navbar />
-        <main className="p-5">
-        {children}
-        </main>
-        <Toaster/>
-        <Footer/>
+        <UserProvider>
+          <CountProvider>
+          <Navbar />
+          <main className="p-5">
+          {children}
+          </main>
+          <Toaster/>
+          <Footer/>
+          </CountProvider>
+        </UserProvider>
       </body>
     </html>
   );

@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { product } from '@/types/products.type';
 import { Button } from '@/components/ui/button';
 import Link from "next/link";
+import Addcartbtn from '../cartbtn/Addcartbtn';
 
 export default function ProductCard({ product }: { product: product }) {
   const { category: { name }, title, ratingsAverage, ratingsQuantity, imageCover, price, _id } = product;
@@ -63,9 +64,7 @@ export default function ProductCard({ product }: { product: product }) {
 
         {/* Actions */}
         <CardFooter className="flex justify-between items-center">
-          <Button className="px-4 py-2 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors">
-            Add to cart
-          </Button>
+          <Addcartbtn id ={product._id}/>
           <Link href={`/products/${_id}`}>
             <Button className="text-sm text-gray-600 hover:text-orange-400 bg-accent">
               View Details

@@ -20,7 +20,7 @@ export default function Footer() {
 
         {/* Customer Service */}
         <div>
-          <h3 className="text-lg font-semibold text-orange-500 mb-3">Customer Service</h3>
+          <h3 className="text-lg font-semibold text-orange-500 mb-3"><span className="text-blue-950">Customer</span> Service</h3>
           <ul className="space-y-2 text-sm">
             <li><Link href="/faq" className="hover:text-orange-500 transition">FAQ</Link></li>
             <li><Link href="/returns" className="hover:text-orange-500 transition">Returns</Link></li>
@@ -31,7 +31,7 @@ export default function Footer() {
 
         {/* Socials */}
         <div>
-          <h3 className="text-lg font-semibold text-orange-500 mb-3">Follow Us</h3>
+          <h3 className="text-lg font-semibold text-orange-500 mb-3"><span className="text-blue-950">Follow</span> Us</h3>
           <div className="flex gap-3 text-xl">
             <i className="fa-brands fa-youtube text-red-600 hover:scale-110 transition-transform"></i>
             <i className="fa-brands fa-linkedin text-blue-800 hover:scale-110 transition-transform"></i>
@@ -44,7 +44,7 @@ export default function Footer() {
 
         {/* Payment Methods */}
         <div>
-          <h3 className="text-lg font-semibold text-orange-500 mb-3">We Accept</h3>
+          <h3 className="text-lg font-semibold text-orange-500 mb-3"><span className="text-blue-950">We</span>Accept</h3>
           <div className="flex flex-wrap items-center gap-4">
             {[
               { src: "/payment/mastercard.png", alt: "Mastercard" },
@@ -64,7 +64,25 @@ export default function Footer() {
               />
             ))}
           </div>
+          <h3 className="text-lg font-semibold text-orange-500 mb-3"><span className="text-blue-950">Download</span> Now</h3>
+          <div className="flex flex-wrap items-center gap-4">
+            {[
+              // 👇 New App Store + Google Play logos
+              { src: "/myimages/app-store.png", alt: "App Store" },
+              { src: "/myimages/playstore.png", alt: "Google Play" },
+            ].map((pm, i) => (
+              <Image
+                key={i}
+                src={pm.src}
+                alt={pm.alt}
+                width={50}
+                height={30}
+                className="h-8 w-auto object-contain hover:scale-110 transition-transform"
+              />
+            ))}
+          </div>
         </div>
+
       </div>
 
       {/* Bottom Bar */}

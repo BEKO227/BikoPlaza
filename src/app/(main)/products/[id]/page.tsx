@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { productDetails, productDetailsitem } from '@/types/productDetails.type';
 import React from 'react'
 import DetailSlider from './../../../_components/DetailSlider/DetailSlider';
+import Addcartbtn from './../../../_components/cartbtn/Addcartbtn';
 
 export default async function page({params}:{params:{id:string}}) {
     
@@ -26,7 +27,7 @@ export default async function page({params}:{params:{id:string}}) {
         );
       };
 
-    const {id}= await params;
+    const {id}=  params;
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${id}`);
     const data:productDetails = await res.json();
     const product:productDetailsitem = data.data;
@@ -71,9 +72,7 @@ export default async function page({params}:{params:{id:string}}) {
       
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6">
-              <Button className="w-full sm:w-auto px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors">
-                Add to Cart
-              </Button>
+              <Addcartbtn id={id}/>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 'use client'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Form} from '@/components/ui/form'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,8 +9,19 @@ import { Input } from '@/components/ui/input';
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { signIn, useSession } from 'next-auth/react';
+import { CartData } from '@/types/cartdata.type';
+import { getCartData } from '@/CartAction/CartAction';
+import { getUserToken } from '@/getUserToken';
+import { CountContext } from '@/app/CountProvider';
 
 export default function Login() {
+    const context = useContext(CountContext);
+  
+    if (!context) return null; // safety check if provider missing
+  
+    const { setcount } = context;
+  const { data: session } = useSession();
   const Route =   useRouter();
   const SchemaLogin = z.object({
     email: z.email().nonempty({ message: "Invalid email address." }),
@@ -30,22 +41,38 @@ export default function Login() {
     resolver: zodResolver(SchemaLogin),
   })
   async function handleLogin(values: z.infer<typeof SchemaLogin>) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signin`, {
-      method: 'POST',
-      body: JSON.stringify(values),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    const x = await signIn('credentials',{
+      email: values.email,
+      password: values.password,
+      redirect: false,
+      // callbackUrl: '/'
     })
-    const data = await res.json();
-    console.log(data);
-    if(data.message === 'success'){
-      loginForm.reset();
-      toast.success('Welcome Back!',{position:"top-center"});
+    console.log(x);
+    if(x?.ok){
+      toast.success(`Welcome Back! ${session?.user?.name}`,{position:"top-center"});
+          let token: any = await getUserToken();
+          if (token) {
+            const data: CartData = await getCartData();
+            let sum = 0;
+            data.data.products.forEach((item) => {
+              sum += item.count;
+            });
+            setcount(sum);
+          }
       Route.push('/');
     } else {
-      toast.error(data.message || 'login failed. Please try again.',{position:"top-center"});
+      toast.error(x?.error,{position:"top-center"});
     }
+    
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signin`, {
+    //   method: 'POST',
+    //   body: JSON.stringify(values),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    // const data = await res.json();
+    // console.log(data);
   }
   return (
     <>
