@@ -89,7 +89,6 @@ export default function Footer() {
       <div className="mt-6 pt-4 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} <span className="font-semibold text-blue-950">Biko<span className="text-orange-500">Plaza</span></span>
         .All rights reserved.
-        <span className="font-semibold text-blue-950 block">Inspired by <span className="text-orange-500">Donia</span></span>
       </div>
     </footer>
   );
