@@ -36,7 +36,7 @@ export default function CheckoutForm() {
       console.log(data)
       toast.success("Checkout session created successfully")
       if (data.session?.url) {
-        window.open(data.session.url) 
+        window.location.href = data.session.url
       }
     } else {
       toast.error(data.message || "Something went wrong with checkout")
