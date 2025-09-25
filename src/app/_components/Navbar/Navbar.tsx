@@ -189,8 +189,7 @@ export function Navbar() {
                             
                           <button type="button" className="relative inline-flex items-center p-3 font-medium text-center text-blue-950 text-lg hover:text-orange-400 transition-colors">
                           cart
-                          <span className="sr-only">Notifications</span>
-                            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">20</div>
+                            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{count}</div>
                           </button>
 
                           </Link>
