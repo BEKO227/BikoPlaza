@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "next-auth/react";
 import  { CountContext } from "@/app/CountProvider";
 
+
 export function Navbar() {
   const { data: session, status } = useSession();
   const context = useContext(CountContext);
@@ -34,7 +35,7 @@ export function Navbar() {
   // Visible only when logged in
   const AuthOnlyItems: { path: string; content: string }[] = [
     // { path: "/cart", content: "Cart" },
-    { path: "/orders", content: "Orders" },
+    { path: "/allorders", content: "Orders" },
   ];
 
   const MenuauthItems: { path: string; content: string }[] = [

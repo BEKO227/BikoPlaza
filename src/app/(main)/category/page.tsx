@@ -1,4 +1,5 @@
 'use client'
+import Loading from '@/app/_components/loading/loading'
 import { Datum } from '@/types/brands'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -55,7 +56,9 @@ export default function Category() {
             </Link>
           ))
         ) : (
-          <p className="text-center col-span-full text-gray-500">Loading categories...</p>
+                    <>
+                              <Loading/>
+                    </>
         )}
       </div>
     </div>

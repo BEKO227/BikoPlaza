@@ -9,8 +9,11 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import Loading from './../../_components/loading/loading';
 import { toast } from "sonner"
 import { CountContext } from "@/app/CountProvider"
+import { useRouter } from "next/navigation"
+import  Link  from 'next/link';
 
 export default  function Cart() {
+    const Route = useRouter()
     const context = useContext(CountContext);
   
     if (!context) return null; 
@@ -150,9 +153,9 @@ export default  function Cart() {
           <span>{cart?.totalCartPrice} EGP</span>
         </div>
         <Button className="bg-orange-500 hover:bg-white hover:text-blue-950 w-full mt-3 text-lg py-6 rounded-xl">
-          Checkout
+          <Link href={"/checkoutSession/"+ cart?._id } >CheckOut Session</Link>
         </Button>
-        <Button variant="ghost" className="bg-blue-950 w-full text-white">
+        <Button onClick={()=>Route.push('/')} variant="ghost" className="bg-blue-950 w-full text-white">
           Continue Shopping
         </Button>
       </Card>

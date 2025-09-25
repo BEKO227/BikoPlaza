@@ -1,4 +1,6 @@
-import React from 'react'
+"use client";
+
+import React, { useState } from 'react'
 import {
   Card,
   CardContent,
@@ -11,6 +13,7 @@ import { product } from '@/types/products.type';
 import { Button } from '@/components/ui/button';
 import Link from "next/link";
 import Addcartbtn from '../cartbtn/Addcartbtn';
+import { addToWishlist, removeFromWishlist } from '@/Wishlist/Wishlist';
 
 export default function ProductCard({ product }: { product: product }) {
   const { category: { name }, title, ratingsAverage, ratingsQuantity, imageCover, price, _id } = product;
@@ -20,11 +23,31 @@ export default function ProductCard({ product }: { product: product }) {
   const hasHalfStar = ratingsAverage % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
+  const [inWishlist, setInWishlist] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleWishlist() {
+    try {
+      setLoading(true);
+      if (inWishlist) {
+        await removeFromWishlist(_id);
+        setInWishlist(false);
+      } else {
+        await addToWishlist(_id);
+        setInWishlist(true);
+      }
+    } catch (err) {
+      console.error("Wishlist error:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div>
       <Card className="w-72 shadow-2xl rounded-2xl overflow-hidden">
         {/* Product Image */}
-        <CardHeader className="p-0">
+        <CardHeader className="p-0 relative">
           <Image
             src={imageCover}
             alt={title}
@@ -32,6 +55,18 @@ export default function ProductCard({ product }: { product: product }) {
             height={180}
             className="object-cover w-full h-72 rounded-2xl"
           />
+          {/* Wishlist icon in corner */}
+          <button
+            onClick={handleWishlist}
+            disabled={loading}
+            className="absolute top-3 right-3 bg-white/80 rounded-full p-2 shadow hover:scale-110 transition"
+          >
+            {inWishlist ? (
+              <i className="fa-solid fa-heart text-red-500 text-lg"></i>
+            ) : (
+              <i className="fa-regular fa-heart text-gray-600 text-lg"></i>
+            )}
+          </button>
         </CardHeader>
 
         {/* Product Info */}
@@ -43,13 +78,10 @@ export default function ProductCard({ product }: { product: product }) {
 
           {/* Rating */}
           <div className="flex items-center gap-1 mt-2 text-yellow-400">
-
             {[...Array(fullStars)].map((_, i) => (
               <i key={`full-${i}`} className="fa-solid fa-star"></i>
             ))}
-
             {hasHalfStar && <i className="fa-solid fa-star-half-stroke"></i>}
-
             {[...Array(emptyStars)].map((_, i) => (
               <i key={`empty-${i}`} className="fa-regular fa-star"></i>
             ))}
@@ -64,7 +96,7 @@ export default function ProductCard({ product }: { product: product }) {
 
         {/* Actions */}
         <CardFooter className="flex justify-between items-center">
-          <Addcartbtn id ={product._id}/>
+          <Addcartbtn id={_id} />
           <Link href={`/products/${_id}`}>
             <Button className="text-sm text-gray-600 hover:text-orange-400 bg-accent">
               View Details
